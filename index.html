@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Happy Anniversary ❤️</title>
+<title>Our Anniversary ❤️</title>
 
 <style>
 body{
@@ -9,12 +9,24 @@ background:black;
 color:white;
 text-align:center;
 font-family:Arial;
+overflow:hidden;
 }
 
 h1{
 margin-top:200px;
-color:#ff4d6d;
 font-size:50px;
+color:#ff4d6d;
+}
+
+.heart{
+position:absolute;
+color:red;
+animation: fall 5s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-100px);}
+100%{transform:translateY(100vh);}
 }
 </style>
 
@@ -23,9 +35,27 @@ font-size:50px;
 <body>
 
 <h1>Happy Anniversary ❤️</h1>
-
 <p>Min Myat Khaing ❤️ Thaw Thaw Zin</p>
-<p>Thank you for being in my life.</p>
+<p>You are my happiness forever.</p>
+
+<script>
+
+function createHeart(){
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(20+Math.random()*30)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{heart.remove();},5000);
+}
+
+setInterval(createHeart,300);
+
+</script>
 
 </body>
 </html>
