@@ -1,59 +1,139 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Our Anniversary ❤️</title>
 
 <style>
+
 body{
-background:black;
+background:#000;
 color:white;
 text-align:center;
 font-family:Arial;
-overflow:hidden;
 }
 
 h1{
-margin-top:200px;
-font-size:50px;
+margin-top:40px;
 color:#ff4d6d;
 }
 
+.row{
+margin:20px;
+}
+
 .heart{
+width:80px;
+height:80px;
+background:red;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+margin:10px;
+color:white;
+font-size:20px;
+font-weight:bold;
+position:relative;
+transform:rotate(-45deg);
+}
+
+.heart:before,
+.heart:after{
+content:"";
+width:80px;
+height:80px;
+background:red;
+border-radius:50%;
 position:absolute;
-color:red;
-animation: fall 5s linear infinite;
 }
 
-@keyframes fall{
-0%{transform:translateY(-100px);}
-100%{transform:translateY(100vh);}
+.heart:before{
+top:-40px;
+left:0;
 }
+
+.heart:after{
+left:40px;
+top:0;
+}
+
+.number{
+transform:rotate(45deg);
+}
+
+button{
+margin:10px;
+padding:10px 20px;
+font-size:16px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
 </style>
-
 </head>
 
 <body>
 
-<h1>Happy Anniversary ❤️</h1>
-<p>Min Myat Khaing ❤️ Thaw Thaw Zin</p>
-<p>You are my happiness forever.</p>
+<h1>Our Love Anniversary ❤️</h1>
+
+<!-- Row 1 -->
+<div class="row">
+<div class="heart"><div class="number" id="days">0</div></div>
+<div class="heart"><div class="number" id="hours">0</div></div>
+<div class="heart"><div class="number" id="minutes">0</div></div>
+</div>
+
+<!-- Row 2 -->
+<div class="row">
+<div class="heart"><div class="number" id="years">0</div></div>
+<div class="heart"><div class="number" id="months">0</div></div>
+<div class="heart"><div class="number" id="date">0</div></div>
+</div>
+
+<!-- Row 3 -->
+<div class="row">
+<button onclick="setZone('Asia/Yangon')">🇲🇲 Myanmar</button>
+<button onclick="setZone('Asia/Ho_Chi_Minh')">🇻🇳 Vietnam</button>
+<button onclick="setZone('Asia/Tokyo')">🇯🇵 Japan</button>
+</div>
 
 <script>
 
-function createHeart(){
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="❤️";
+let zone = "Asia/Ho_Chi_Minh"
 
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(20+Math.random()*30)+"px";
+/* Set your anniversary date here */
+const anniversary = new Date("2022-08-13T00:24:00")
 
-document.body.appendChild(heart);
-
-setTimeout(()=>{heart.remove();},5000);
+function setZone(z){
+zone = z
 }
 
-setInterval(createHeart,300);
+function update(){
+
+const now = new Date(new Date().toLocaleString("en-US",{timeZone:zone}))
+
+const diff = now - anniversary
+
+const minutes = Math.floor(diff/60000)%60
+const hours = Math.floor(diff/3600000)%24
+const days = Math.floor(diff/86400000)
+
+document.getElementById("minutes").innerText = minutes
+document.getElementById("hours").innerText = hours
+document.getElementById("days").innerText = days
+
+const y = now.getFullYear()-anniversary.getFullYear()
+const m = now.getMonth()-anniversary.getMonth()
+const d = now.getDate()-anniversary.getDate()
+
+document.getElementById("years").innerText = y
+document.getElementById("months").innerText = m
+document.getElementById("date").innerText = d
+
+}
+
+setInterval(update,1000)
 
 </script>
 
