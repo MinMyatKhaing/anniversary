@@ -125,9 +125,9 @@ document.getElementById("minutes").innerText = minutes
 document.getElementById("hours").innerText = hours
 document.getElementById("days").innerText = days
 
-const y = now.getFullYear()-anniversary.getFullYear()
-const m = now.getMonth()-anniversary.getMonth()
-const d = now.getDate()-anniversary.getDate()
+let y = now.getFullYear()-anniversary.getFullYear()
+let m = now.getMonth()-anniversary.getMonth()
+let d = now.getDate()-anniversary.getDate()
 
 if(d < 0){
 m--
