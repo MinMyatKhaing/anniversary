@@ -129,6 +129,16 @@ const y = now.getFullYear()-anniversary.getFullYear()
 const m = now.getMonth()-anniversary.getMonth()
 const d = now.getDate()-anniversary.getDate()
 
+if(d < 0){
+m--
+d += 30
+}
+
+if(m < 0){
+y--
+m += 12
+}
+
 document.getElementById("years").innerText = y
 document.getElementById("months").innerText = m
 document.getElementById("date").innerText = d
