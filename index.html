@@ -20,6 +20,9 @@ color:#ff4d6d;
 
 .row{
 margin:20px;
+display:flex;
+justify-content:center;
+gap:25px;
 }
 
 .heart{
@@ -29,12 +32,18 @@ background:red;
 display:inline-flex;
 align-items:center;
 justify-content:center;
-margin:8px;
 color:white;
 font-size:14px;
 font-weight:bold;
 position:relative;
 transform:rotate(-45deg);
+animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat{
+0%{transform:rotate(-45deg) scale(1);}
+50%{transform:rotate(-45deg) scale(1.15);}
+100%{transform:rotate(-45deg) scale(1);}
 }
 
 .heart:before,
@@ -71,6 +80,31 @@ border:none;
 border-radius:10px;
 cursor:pointer;
 }
+  
+.flagBtn{
+font-size:18px;
+padding:10px 20px;
+margin:10px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+background:#ff4d6d;
+color:white;
+transition:all 0.3s ease;
+}
+
+/* Hover effect */
+.flagBtn:hover{
+transform:scale(1.15);
+background:#ff1e4d;
+box-shadow:0 0 10px #ff4d6d;
+}
+
+/* Active selected button */
+.flagBtn.active{
+background:#00c3ff;
+box-shadow:0 0 12px #00c3ff;
+}
 
 </style>
 </head>
@@ -95,20 +129,31 @@ cursor:pointer;
 
 <!-- Row 3 -->
 <div class="row">
-<button onclick="setZone('Asia/Yangon')">🇲🇲 Myanmar</button>
-<button onclick="setZone('Asia/Ho_Chi_Minh')">🇻🇳 Vietnam</button>
-<button onclick="setZone('Asia/Tokyo')">🇯🇵 Japan</button>
+<button class="flagBtn active" onclick="setZone('Asia/Yangon',this)">🇲🇲 Myanmar</button>
+<button class="flagBtn" onclick="setZone('Asia/Ho_Chi_Minh',this)">🇻🇳 Vietnam</button>
+<button class="flagBtn" onclick="setZone('Asia/Tokyo',this)">🇯🇵 Japan</button>
 </div>
 
 <script>
-
 let zone = "Asia/Ho_Chi_Minh"
 
-/* Set your anniversary date here */
-const anniversary = new Date("2022-08-13T00:24:00")
+/* Set your anniversary date here (Myanmar time) */
+const anniversary = new Date(Date.UTC(2022,7,12,17,24,0))
 
-function setZone(z){
+function setZone(z,btn){
+
 zone = z
+
+/* highlight active button */
+document.querySelectorAll(".flagBtn").forEach(b=>{
+b.classList.remove("active")
+})
+
+btn.classList.add("active")
+
+/* update timer immediately */
+update()
+
 }
 
 function update(){
@@ -117,26 +162,34 @@ const now = new Date(new Date().toLocaleString("en-US",{timeZone:zone}))
 
 const diff = now - anniversary
 
-const minutes = Math.floor(diff/60000)%60
-const hours = Math.floor(diff/3600000)%24
+const minutes = Math.floor(diff/60000) % 60
+const hours = Math.floor(diff/3600000) % 24
 const days = Math.floor(diff/86400000)
 
 document.getElementById("minutes").innerText = minutes
 document.getElementById("hours").innerText = hours
 document.getElementById("days").innerText = days
 
-let y = now.getFullYear()-anniversary.getFullYear()
-let m = now.getMonth()-anniversary.getMonth()
-let d = now.getDate()-anniversary.getDate()
+
+/* Anniversary Y M D calculation */
+
+let y = now.getFullYear() - anniversary.getFullYear()
+let m = now.getMonth() - anniversary.getMonth()
+let d = now.getDate() - anniversary.getDate()
 
 if(d < 0){
-m--
-d += 30
+
+    m--
+
+    // get correct days in previous month
+    const prevMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate()
+
+    d += prevMonthDays
 }
 
 if(m < 0){
-y--
-m += 12
+    y--
+    m += 12
 }
 
 document.getElementById("years").innerText = y
@@ -146,7 +199,6 @@ document.getElementById("date").innerText = d
 }
 
 setInterval(update,1000)
-
 </script>
 
 </body>
