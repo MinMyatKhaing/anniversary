@@ -23,15 +23,15 @@ margin:20px;
 }
 
 .heart{
-width:80px;
-height:80px;
+width:50px;
+height:50px;
 background:red;
 display:inline-flex;
 align-items:center;
 justify-content:center;
-margin:10px;
+margin:8px;
 color:white;
-font-size:20px;
+font-size:14px;
 font-weight:bold;
 position:relative;
 transform:rotate(-45deg);
@@ -40,25 +40,27 @@ transform:rotate(-45deg);
 .heart:before,
 .heart:after{
 content:"";
-width:80px;
-height:80px;
+width:50px;
+height:50px;
 background:red;
 border-radius:50%;
 position:absolute;
 }
 
 .heart:before{
-top:-40px;
+top:-25px;
 left:0;
 }
 
 .heart:after{
-left:40px;
+left:25px;
 top:0;
 }
 
 .number{
 transform:rotate(45deg);
+z-index:1;
+font-size:14px;
 }
 
 button{
